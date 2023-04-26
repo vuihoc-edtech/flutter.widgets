@@ -331,7 +331,10 @@ class _PositionedListState extends State<PositionedList> {
           final ValueKey<int> key = element.widget.key as ValueKey<int>;
           if (widget.scrollDirection == Axis.vertical) {
             final reveal = viewport!.getOffsetToReveal(box, 0).offset;
-            if (!reveal.isFinite) continue;
+            if (!reveal.isFinite ||
+                !anchor.isFinite ||
+                !viewport.offset.pixels.isFinite ||
+                !viewport.size.height.isFinite) continue;
             final itemOffset =
                 reveal - viewport.offset.pixels + anchor * viewport.size.height;
             positions.add(ItemPosition(
